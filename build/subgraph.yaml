@@ -1,0 +1,52 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PancakeFactory
+    network: bsc
+    source:
+      address: "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73"
+      abi: PancakeFactory
+      startBlock: 6809737
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: PancakeFactory
+          file: PancakeFactory/abis/PancakeFactory.json
+        - name: ERC20
+          file: PancakeFactory/abis/ERC20.json
+        - name: ERC20NameBytes
+          file: PancakeFactory/abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: PancakeFactory/abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+      file: PancakeFactory/PancakeFactory.wasm
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: bsc
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: templates/Pair/Pair.wasm
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: Factory
+          file: Pair/abis/PancakeFactory.json
+        - name: Pair
+          file: Pair/abis/Pair.json

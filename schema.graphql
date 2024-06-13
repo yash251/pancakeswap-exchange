@@ -1,0 +1,36 @@
+# type PairCreated @entity(immutable: true) {
+#   id: Bytes!
+#   token0: Bytes! # address
+#   token1: Bytes! # address
+#   pair: Bytes! # address
+#   param3: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type PancakeFactory @entity {
+  id: ID!
+
+  totalPairs: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+
+  name: String!
+  symbol: String!
+  decimals: BigInt!
+}
+
+type Pair @entity {
+  id: ID!
+
+  name: String!
+  token0: Token!
+  token1: Token!
+
+  block: BigInt!
+  timestamp: BigInt!
+
+}
